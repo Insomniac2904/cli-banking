@@ -1,0 +1,23 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon homepage",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.3.2",
+    "chalk": "^5.2.0",
+    "cli-color": "^2.0.3",
+    "dotenv": "^16.0.3",
+    "inquirer": "^8.0.0",
+    "nanospinner": "^1.1.0",
+    "node-fetch": "^3.3.0",
+    "nodemon": "^2.0.20"
+  }
+}
