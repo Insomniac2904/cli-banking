@@ -31,7 +31,9 @@ const TempSchema = new mongoose.Schema({
   },
   transactions: {
     type: Array,
-    default: [],
+    default: [
+      { Tid: String, Date: Date, Time: Date, Amount: Number, To: String },
+    ],
   },
 });
 

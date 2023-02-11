@@ -1,7 +1,96 @@
 // check profile pass
 //check send  userid
+//check if amount being sent is less than curent balance amount
 //check if reciever is present in the beneficiary list
 //if reciever prsent in list then chek if transfer aount is <=limit of not
-//check if amount being sent is less than curent balance amount
 //if limit and balance is ok generate a transctaion object and push it to the tranaction array of sender and reciver
 //deduct amount from the balance and add to reciver
+
+const tempUser = require("../model/tempUser");
+const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require("uuid");
+const transfer = async (req, res) => {
+  const currentUser = await tempUser.findOne({ userid: req.body.userid });
+  const reciever = await tempUser.findOne({ userid: req.body.recieverUserid });
+  if (!reciever) res.status(501).send("reciever not found!");
+  else {
+    bcrypt
+      .compare(req.body.profilePass, currentUser.profilePass)
+      .then((result) => {
+        if (!result) {
+          res.status(401).send("incorrest profile password");
+        } else {
+          const amount = req.body.amount;
+          if (amount > currentUser.balance)
+            res.send("balance low for transaction");
+          else {
+            let limit;
+            let flag;
+            currentUser.beneficiaries.forEach((element) => {
+              if (element.beneUserid == reciever.userid) {
+                limit = element.limit;
+                flag = 1;
+              }
+            });
+            if (flag == 1) {
+              if (amount > limit)
+                res.send("transfer amount greater than benficiary limit");
+              else {
+                const d = new Date();
+                const date = `${d.getDate()}-${
+                  d.getMonth() + 1
+                }-${d.getFullYear()}`;
+                const time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+                console.log(date, time);
+                let object = {
+                  Tid: uuidv4(),
+                  Date: date,
+                  Time: time,
+                  Amount: amount,
+                  To: `${reciever.userid}-${reciever.name}`,
+                };
+                console.log(object);
+                tempUser
+                  .updateOne(
+                    { userid: currentUser.userid },
+                    {
+                      $push: { transactions: object },
+                      $inc: { balance: amount * -1 },
+                    }
+                  )
+                  .then(() => {
+                    object["To"] = object["From"];
+                    delete object["To"];
+                    object = object[
+                      "From"
+                    ] = `${currentUser.userid}-${currentUser.name}`;
+                    console.log("--------------/n" + object);
+                    tempUser
+                      .updateOne(
+                        { userid: reciever.userid },
+                        {
+                          $push: { transactions: object },
+                          $inc: { balance: amount },
+                        }
+                      )
+                      .then(() => {
+                        // res.status(500).send(reciever + "\n" + currentUser);
+                        res.status(200).send("transaction done successfully");
+                      })
+                      .catch((err) => {
+                        console.log(err.message);
+                      });
+                  })
+                  .catch((err) => {
+                    console.log(err.message);
+                  });
+              }
+            } else {
+              res.send("reciever not in  beneficairy list");
+            }
+          }
+        }
+      });
+  }
+};
+module.exports = transfer;

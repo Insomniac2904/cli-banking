@@ -10,23 +10,13 @@ const register = () => {
       },
       {
         type: "password",
-        name: "pass",
+        name: "password",
         message: "enter password for login: ",
-      },
-      {
-        type: "password",
-        name: "confPass",
-        message: "confirm password for signUp: ",
       },
       {
         type: "password",
         name: "profilePass",
         message: "enter Profile password: ",
-      },
-      {
-        type: "password",
-        name: "confProfilePass",
-        message: "confirm Profile password: ",
       },
       {
         type: "input",
@@ -35,27 +25,23 @@ const register = () => {
       },
     ])
     .then((ans) => {
-      if (
-        ans.profilePass === ans.confProfilePass &&
-        ans.pass === ans.confPass
-      ) {
-        axios({
-          method: "post",
-          url: `${process.env.API_URL}/register`,
-          data: {
-            userid: ans.userid,
-            password: ans.password,
-            name: ans.name,
-            profilePass: ans.profilePass,
-          },
+      //   console.log(ans);
+      axios({
+        method: "post",
+        url: `${process.env.API_URL}/register`,
+        data: {
+          userid: ans.userid,
+          password: ans.password,
+          name: ans.name,
+          profilePass: ans.profilePass,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
         })
-          .then((res) => {
-            console.log(res.status);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);

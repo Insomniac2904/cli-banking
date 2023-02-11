@@ -6,10 +6,10 @@ const delBene = async (req, res) => {
   const currentUser = await tempUser.findOne({ userid: req.body.userid });
   if (!currentUser) return res.send("user not found enter proper userid");
   else {
-    const removeBeneId = req.body.removeBene;
+    const beneficiaryUserid = req.body.beneficiaryUserid;
     let flag = 0;
     currentUser.beneficiaries.forEach((element) => {
-      if (element.beneUserid === removeBeneId) {
+      if (element.beneUserid === beneficiaryUserid) {
         flag = 1;
         return;
       }
@@ -26,7 +26,7 @@ const delBene = async (req, res) => {
               .updateOne(
                 { userid: currentUser.userid },
                 {
-                  $pull: { beneficiaries: { beneUserid: req.body.removeBene } },
+                  $pull: { beneficiaries: { beneUserid: beneficiaryUserid } },
                 }
               )
               .then(() => {

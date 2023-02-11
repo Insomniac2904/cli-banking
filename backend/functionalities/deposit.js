@@ -18,10 +18,13 @@ const deposit = async (req, res) => {
         .updateOne({ _id: tempuser._id }, { $inc: { balance: amount } })
         .then(() => {
           res.send("amount added to balance is: " + amount);
+        })
+        .catch((err) => {
+          console.log(err);
         });
       // ! add deposit to transaction history without encrypter id
     } else {
-      res.status(500).send("Incorrect profile password");
+      res.status(500).send("Sorry Incorrect profile password");
     }
   }
 };

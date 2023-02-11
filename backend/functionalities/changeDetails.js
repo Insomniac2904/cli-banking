@@ -17,16 +17,16 @@ const updateDetails = async (req, res) => {
           phone: req.body.newphone,
           city: req.body.newcity,
         };
-        if (updateDetails.email != null) {
+        if (updateDetails.email !== null) {
           updateOne(
             { userid: tempuser.userid },
             { email: updateDetails.email }
           );
         }
-        if (updateDetails.city != null) {
+        if (updateDetails.city !== null) {
           updateOne({ userid: tempuser.userid }, { email: updateDetails.city });
         }
-        if (updateDetails.phone != null) {
+        if (updateDetails.phone !== null) {
           updateOne(
             { userid: tempuser.userid },
             { email: updateDetails.phone }

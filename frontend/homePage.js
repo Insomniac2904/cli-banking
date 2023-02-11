@@ -14,9 +14,15 @@ inquirer
     },
   ])
   .then((answer) => {
-    if (answer.homeOptions === "LOGIN") {
+    console.log(answer);
+    if (answer.homeOptions == "LOGIN") {
       login();
-    } else {
+    }
+    if (answer.homeOptions == "REGISTER") {
       register();
+    }
+    if (answer.homeOptions == "EXIT") {
+      console.log("SEE YOU LATER");
+      exit(1);
     }
   });

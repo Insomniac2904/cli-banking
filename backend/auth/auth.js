@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const tempUser = require("../model/tempUser");
 const bcrypt = require("bcrypt");
-
+const fs = require("fs");
 const dohash = (text) => {
   return bcrypt.hash(text, 10).then((hash) => {
     // console.log(hash);
@@ -10,9 +10,12 @@ const dohash = (text) => {
 };
 
 const signUp = async (req, res) => {
+  console.log("inside register\n" + req.body);
   const tempuser = await tempUser.findOne({ userid: req.body.userid });
   if (tempuser) {
-    res.send("User already exists, please Sign in");
+    res.send(
+      "User already exists, please Sign in Or choose try again with another Userid"
+    );
   } else {
     const user = new tempUser({
       userid: req.body.userid,
@@ -21,7 +24,7 @@ const signUp = async (req, res) => {
       name: req.body.name,
       balance: 0,
     });
-
+    // console.log(user);
     user.password = await dohash(user.password);
     user.profilePass = await dohash(user.profilePass);
     // console.log((user.profilePass, user.password));
@@ -37,17 +40,17 @@ const signUp = async (req, res) => {
 };
 
 const signIn = async (req, res) => {
-  //signIn
-  // console.log(req.body);
+  // console.log(req);
   const tempuser = await tempUser.findOne({ userid: req.body.userid });
+  // console.log(tempuser);
   if (!tempuser) {
-    return res.send("User does not exists, please Sign Up");
+    return res.status(201).send("User does not exists, please Sign Up");
   } else {
     const validPass = await bcrypt.compare(
       req.body.password,
       tempuser.password
     );
-    if (!validPass) return res.status(500).send("password incorrect");
+    if (!validPass) return res.status(202).send("password incorrect");
     else {
       const token = jwt.sign(
         { userid: tempuser.userid },
@@ -55,10 +58,9 @@ const signIn = async (req, res) => {
       );
 
       //! save token in environemnt variable
-      process.env["TOKEN"] = token;
+      // process.env["TOKEN"] = token;
       //   console.log(process.env.TOKEN);
-
-      res.header("auth-token", token).send(token);
+      res.status(201).send(token);
     }
   }
 };

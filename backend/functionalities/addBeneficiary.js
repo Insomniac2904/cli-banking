@@ -5,9 +5,11 @@ const bcrypt = require("bcrypt");
 const addBeneficiaries = async (req, res) => {
   const currentUser = await tempUser.findOne({ userid: req.body.userid });
   const BeneUser = await tempUser.findOne({
-    userid: req.body.beneficiary.userid,
+    userid: req.body.beneficiaryUserid,
   });
   if (!currentUser) return res.send("user not found enter proper userid");
+  if (BeneUser.userid == currentUser.userid)
+    return res.send("Cannot add youself to beneficiaries");
   if (!BeneUser) return res.send("Beneficiary not found enter proper userid");
   // console.log(currentUser);
   // console.log(BeneUser);
@@ -19,8 +21,8 @@ const addBeneficiaries = async (req, res) => {
         if (!result) res.send("incorrect profile pass");
         else {
           const bene = {
-            beneUserid: req.body.beneficiary.userid,
-            limit: req.body.beneficiary.limit,
+            beneUserid: req.body.beneficiaryUserid,
+            limit: req.body.Limit,
           };
           let found = 0;
           currentUser.beneficiaries.forEach((element) => {
