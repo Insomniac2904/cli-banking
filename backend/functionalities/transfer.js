@@ -61,7 +61,7 @@ const transfer = async (req, res) => {
                   .then(() => {
                     object["To"] = object["From"];
                     delete object["To"];
-                    object = object[
+                    object[
                       "From"
                     ] = `${currentUser.userid}-${currentUser.name}`;
                     console.log("--------------/n" + object);
