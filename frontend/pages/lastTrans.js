@@ -1,23 +1,22 @@
 const inquirer = require("inquirer");
 const axios = require("axios");
-const redirector = require("./redirector.js");
 const lastTrans = async (userid, token) => {
   inquirer
     .prompt({
-      type: "input",
+      type: "password",
       name: "profilePass",
       message: "enter profile pass to view balance",
     })
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/last",
+        url: `${process.env.API_URL}/last`,
         headers: {
           "auth-token": token,
         },
         data: {
           userid: userid,
-          profilePass: result.profilePass,
+          profilePass: result.profilePass.trim(),
         },
       })
         .then(async (response) => {

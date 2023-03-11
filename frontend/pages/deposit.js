@@ -17,13 +17,13 @@ const deposit = async (userid, token) => {
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/deposit",
+        url: `${process.env.API_URL}/deposit`,
         headers: {
           "auth-token": token,
         },
         data: {
           userid: userid,
-          profilePass: result.profilePass,
+          profilePass: result.profilePass.trim(),
           amount: result.amount,
         },
       })

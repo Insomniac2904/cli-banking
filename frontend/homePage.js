@@ -3,6 +3,8 @@ require("dotenv").config();
 const inquirer = require("inquirer");
 const login = require("./pages/login");
 const register = require("./pages/register");
+const fs = require("fs");
+const redirector = require("./pages/redirector");
 
 inquirer
   .prompt([
@@ -10,11 +12,10 @@ inquirer
       type: "list",
       message: "choose an option ",
       name: "homeOptions",
-      choices: ["LOGIN", "REGISTER", "EXIT"],
+      choices: ["LOGIN", "OPTIONS", "REGISTER", "EXIT"],
     },
   ])
   .then((answer) => {
-    console.log(answer);
     if (answer.homeOptions == "LOGIN") {
       login();
     }
@@ -22,7 +23,12 @@ inquirer
       register();
     }
     if (answer.homeOptions == "EXIT") {
-      console.log("SEE YOU LATER");
-      exit(1);
+      fs.unlink("./token.json", (err) => {
+        if (err) console.log("LOGIN REQUIRED");
+        else console.log("SEE YOU LATER");
+      });
+    }
+    if (answer.homeOptions == "OPTIONS") {
+      redirector();
     }
   });

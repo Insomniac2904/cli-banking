@@ -17,13 +17,13 @@ const withdraw = async (userid, token) => {
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/withdraw",
+        url: `${process.env.API_URL}/withdraw`,
         headers: {
           "auth-token": token,
         },
         data: {
           userid: userid,
-          profilePass: result.profilePass,
+          profilePass: result.profilePass.trim(),
           amount: result.amount,
         },
       })

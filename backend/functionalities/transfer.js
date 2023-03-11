@@ -1,11 +1,3 @@
-// check profile pass
-//check send  userid
-//check if amount being sent is less than curent balance amount
-//check if reciever is present in the beneficiary list
-//if reciever prsent in list then chek if transfer aount is <=limit of not
-//if limit and balance is ok generate a transctaion object and push it to the tranaction array of sender and reciver
-//deduct amount from the balance and add to reciver
-
 const tempUser = require("../model/tempUser");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
@@ -22,7 +14,7 @@ const transfer = async (req, res) => {
         } else {
           const amount = req.body.amount;
           if (amount > currentUser.balance)
-            res.send("balance low for transaction");
+            res.send("Balance low for transaction");
           else {
             let limit;
             let flag;
@@ -34,20 +26,20 @@ const transfer = async (req, res) => {
             });
             if (flag == 1) {
               if (amount > limit)
-                res.send("transfer amount greater than benficiary limit");
+                res.send("Transfer amount greater than benficiary limit");
               else {
                 const d = new Date();
                 const date = `${d.getDate()}-${
                   d.getMonth() + 1
                 }-${d.getFullYear()}`;
                 const time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
-                console.log(date, time);
                 let object = {
                   Tid: uuidv4(),
                   Date: date,
                   Time: time,
                   Amount: amount,
-                  To: `${reciever.userid}-${reciever.name}`,
+                  Type: "Money transfer",
+                  To: `id: ${reciever.userid} name: ${reciever.name}`,
                 };
                 console.log(object);
                 tempUser
@@ -61,10 +53,11 @@ const transfer = async (req, res) => {
                   .then(() => {
                     object["To"] = object["From"];
                     delete object["To"];
-                    object = object[
+                    object[
                       "From"
                     ] = `${currentUser.userid}-${currentUser.name}`;
-                    console.log("--------------/n" + object);
+                    console.log("--------------/n");
+                    console.log(object);
                     tempUser
                       .updateOne(
                         { userid: reciever.userid },
@@ -74,7 +67,6 @@ const transfer = async (req, res) => {
                         }
                       )
                       .then(() => {
-                        // res.status(500).send(reciever + "\n" + currentUser);
                         res.status(200).send("transaction done successfully");
                       })
                       .catch((err) => {

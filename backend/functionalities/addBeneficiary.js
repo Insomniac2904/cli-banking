@@ -7,10 +7,10 @@ const addBeneficiaries = async (req, res) => {
   const BeneUser = await tempUser.findOne({
     userid: req.body.beneficiaryUserid,
   });
-  if (!currentUser) return res.send("user not found enter proper userid");
-  if (BeneUser.userid == currentUser.userid)
-    return res.send("Cannot add youself to beneficiaries");
+  if (!currentUser) return res.send("User not found enter proper userid");
   if (!BeneUser) return res.send("Beneficiary not found enter proper userid");
+  if (BeneUser.userid == currentUser.userid)
+    return res.send("Cannot add yourself to beneficiaries");
   // console.log(currentUser);
   // console.log(BeneUser);
   else {
@@ -18,7 +18,7 @@ const addBeneficiaries = async (req, res) => {
       .compare(req.body.profilePass, currentUser.profilePass)
       .then((result) => {
         // console.log(result);
-        if (!result) res.send("incorrect profile pass");
+        if (!result) res.send("Incorrect profile password");
         else {
           const bene = {
             beneUserid: req.body.beneficiaryUserid,
@@ -38,13 +38,13 @@ const addBeneficiaries = async (req, res) => {
                 { $push: { beneficiaries: bene } }
               )
               .then(() => {
-                return res.send("beneficiary added successfully");
+                return res.send("Beneficiary added successfully");
               })
               .catch((err) => {
                 console.log(err);
               });
           } else {
-            return res.send("user already present in beneficiary list");
+            return res.send("User already present in beneficiary list");
           }
         }
       })

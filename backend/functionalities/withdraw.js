@@ -1,10 +1,10 @@
 const tempUser = require("../model/tempUser");
 const bcrypt = require("bcrypt");
 
+const { v4: uuidv4 } = require("uuid");
 const withdraw = async (req, res) => {
   const tempuser = await tempUser.findOne({ userid: req.body.userid });
-  let amount = req.body.amount * -1;
-  // console.log(Math.abs(amount));
+  let amount = req.body.amount;
   if (Math.abs(amount) > tempuser.balance) {
     return res.send("insufficient balance!");
   } else {
@@ -14,12 +14,29 @@ const withdraw = async (req, res) => {
       bcrypt
         .compare(req.body.profilePass, tempuser.profilePass)
         .then((result) => {
-          // console.log(result);
           if (result) {
+            const d = new Date();
+            const date = `${d.getDate()}-${
+              d.getMonth() + 1
+            }-${d.getFullYear()}`;
+            const time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+            let object = {
+              Tid: uuidv4(),
+              Date: date,
+              Time: time,
+              Type: "Withdrawl",
+              Amount: amount,
+            };
             tempUser
-              .updateOne({ _id: tempuser._id }, { $inc: { balance: amount } })
+              .updateOne(
+                { userid: tempuser.userid },
+                {
+                  $push: { transactions: object },
+                  $inc: { balance: amount * -1 },
+                }
+              )
               .then(() => {
-                res.send("amount withdrawn is: " + Math.abs(amount));
+                res.send("Amount withdrawn is: " + amount);
               });
           } else {
             res.status(500).send("incorrect profile password");

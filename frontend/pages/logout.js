@@ -1,6 +1,6 @@
 const fs = require("fs");
 const logout = async (req, res) => {
-  fs.unlink("./tokenFile.txt", (err) => {
+  fs.unlink("./token.json", (err) => {
     if (err) console.log(err.message);
   });
 };

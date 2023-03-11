@@ -6,7 +6,7 @@ const addBene = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass to withdraw amount",
+        message: "enter profile pass ",
       },
       {
         type: "input",
@@ -22,15 +22,15 @@ const addBene = async (userid, token) => {
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/addbene",
+        url: `${process.env.API_URL}/addbene`,
         headers: {
           "auth-token": token,
         },
         data: {
-          userid: userid,
-          profilePass: result.profilePass,
+          userid: userid.trim(),
+          profilePass: result.profilePass.trim(),
           Limit: result.Limit,
-          beneficiaryUserid: result.beneficiaryUserid,
+          beneficiaryUserid: result.beneficiaryUserid.trim(),
         },
       })
         .then((response) => {

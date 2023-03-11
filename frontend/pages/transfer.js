@@ -1,12 +1,13 @@
 const inquirer = require("inquirer");
 const axios = require("axios");
 const transfer = async (userid, token) => {
+  console.log(object);
   inquirer
     .prompt([
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass to withdraw amount",
+        message: "enter profile pass to transfer amount",
       },
       {
         type: "input",
@@ -22,15 +23,15 @@ const transfer = async (userid, token) => {
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/transfer",
+        url: `${process.env.API_URL}/transfer`,
         headers: {
           "auth-token": token,
         },
         data: {
           userid: userid,
-          profilePass: result.profilePass,
-          amount: result.Limit,
-          recieverUserid: result.recieverUserid,
+          profilePass: result.profilePass.trim(),
+          amount: result.amount,
+          recieverUserid: result.recieverUserid.trim(),
         },
       })
         .then((response) => {

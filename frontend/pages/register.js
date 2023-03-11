@@ -6,12 +6,12 @@ const register = () => {
       {
         type: "input",
         name: "userid",
-        message: "enter userid for login: ",
+        message: "enter userid : ",
       },
       {
         type: "password",
         name: "password",
-        message: "enter password for login: ",
+        message: "enter password : ",
       },
       {
         type: "password",
@@ -25,15 +25,14 @@ const register = () => {
       },
     ])
     .then((ans) => {
-      //   console.log(ans);
       axios({
         method: "post",
         url: `${process.env.API_URL}/register`,
         data: {
-          userid: ans.userid,
-          password: ans.password,
-          name: ans.name,
-          profilePass: ans.profilePass,
+          userid: ans.userid.trim(),
+          password: ans.password.trim(),
+          name: ans.name.trim(),
+          profilePass: ans.profilePass.trim(),
         },
       })
         .then((res) => {

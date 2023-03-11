@@ -8,44 +8,51 @@ const addBene = require("./addBene");
 const removeBene = require("./removeBene");
 const transfer = require("./transfer");
 const logout = require("./logout");
-const redirector = async (userid) => {
+const showallbene = require("./showAllbene");
+
+const redirector = async () => {
   const postLogChoices = [
     "CHECK BALANCE",
     "DEPOSIT MONEY",
     "WITHDRAW MONEY",
-    "VIEW LAST 10 TRANSACTIONS",
+    "VIEW ALL TRANSACTIONS",
+    "SHOW ALL BENEFICIARIES",
     "ADD BENEFICIARIES",
     "REMOVE BENEFICIARIES",
-    "CHANGE BENFICIARY LIMIT",
     "TRANSFER AMOUNT",
-    "UPDATE DETAILS",
     "LOGOUT",
   ];
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "postLogChoice",
-        choices: postLogChoices,
-      },
-    ])
-    .then(async (ans) => {
-      // console.log(answer.postLogChoice);
-
-      const token = fs.readFileSync("../frontend/tokenFile.txt", "utf-8");
-      const check = ans.postLogChoice;
-      // console.log(token);
-      if (check === "CHECK BALANCE") await Balance(userid, token);
-      if (check === "DEPOSIT MONEY") await deposit(userid, token);
-      if (check === "WITHDRAW MONEY") await withdraw(userid, token);
-      if (check === "VIEW LAST 10 TRANSACTIONS") await lastTrans(userid, token);
-      if (check === "ADD BENEFICIARIES") await addBene(userid, token);
-      if (check === "REMOVE BENEFICIARIES") await removeBene(userid, token);
-      if (check === "CHANGE BENFICIARY LIMIT") await changeLimit(userid, token);
-      if (check === "TRANSFER AMOUNT") await transfer(userid, token);
-      if (check === "UPDATE DETAILS") await update(userid, token);
-      if (check === "LOGOUT") await logout();
-    });
+  if (!fs.existsSync("./token.json")) console.log("LOGIN REQUIRED");
+  else {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "postLogChoice",
+          choices: postLogChoices,
+        },
+      ])
+      .then((ans) => {
+        const loggedUserDetails = JSON.parse(
+          fs.readFileSync("./token.json", "utf-8")
+        );
+        const token = loggedUserDetails.token;
+        const userid = loggedUserDetails.userid;
+        const check = ans.postLogChoice;
+        if (check === "CHECK BALANCE") Balance(userid, token);
+        if (check === "DEPOSIT MONEY") deposit(userid, token);
+        if (check === "WITHDRAW MONEY") withdraw(userid, token);
+        if (check === "VIEW LAST 10 TRANSACTIONS") lastTrans(userid, token);
+        if (check === "ADD BENEFICIARIES") addBene(userid, token);
+        if (check === "REMOVE BENEFICIARIES") removeBene(userid, token);
+        if (check === "TRANSFER AMOUNT") transfer(userid, token);
+        if (check === "LOGOUT") logout();
+        if (check === "SHOW ALL BENEFICIARIES") showallbene(userid, token);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 
 module.exports = redirector;
