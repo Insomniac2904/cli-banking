@@ -32,13 +32,9 @@ const transfer = async (userid, token) => {
           amount: result.amount,
           recieverUserid: result.recieverUserid.trim(),
         },
-      })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      }).then((response) => {
+        console.log(response.data);
+      });
     })
     .catch((err) => {
       console.log(err);
