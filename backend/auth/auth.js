@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const tempUser = require("../model/tempUser");
 const bcrypt = require("bcrypt");
-const dohash = (text) => {
+const dohash = async (text) => {
   return bcrypt.hash(text, 10).then((hash) => {
     return hash;
   });
@@ -23,6 +23,7 @@ const signUp = async (req, res) => {
     });
     user.password = await dohash(user.password);
     user.profilePass = await dohash(user.profilePass);
+    console.log(user.password, user.profilePass);
     try {
       user.save().then((data, err) => {
         if (err) console.log(err);
