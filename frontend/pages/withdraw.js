@@ -6,7 +6,7 @@ const withdraw = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass to withdraw amount",
+        message: "enter profile pass ",
       },
       {
         type: "number",
@@ -17,7 +17,7 @@ const withdraw = async (userid, token) => {
     .then((result) => {
       axios({
         method: "post",
-        url: `${process.env.API_URL}/withdraw`,
+        url: "http://localhost:3000/withdraw",
         headers: {
           "auth-token": token,
         },

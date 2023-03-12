@@ -41,7 +41,6 @@ const transfer = async (req, res) => {
                   Type: "Money transfer",
                   To: `id: ${reciever.userid} name: ${reciever.name}`,
                 };
-                console.log(object);
                 tempUser
                   .updateOne(
                     { userid: currentUser.userid },
@@ -56,8 +55,7 @@ const transfer = async (req, res) => {
                     object[
                       "From"
                     ] = `${currentUser.userid}-${currentUser.name}`;
-                    console.log("--------------/n");
-                    console.log(object);
+
                     tempUser
                       .updateOne(
                         { userid: reciever.userid },

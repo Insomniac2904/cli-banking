@@ -1,8 +1,9 @@
 {
-  "name": "winter-project",
+  "name": "cli-bank",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "./index.js",
   "scripts": {
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

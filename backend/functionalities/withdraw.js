@@ -24,8 +24,8 @@ const withdraw = async (req, res) => {
               Tid: uuidv4(),
               Date: date,
               Time: time,
-              Type: "Withdrawl",
               Amount: amount,
+              Type: "Withdrawl",
             };
             tempUser
               .updateOne(

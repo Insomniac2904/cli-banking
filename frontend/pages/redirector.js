@@ -42,7 +42,7 @@ const redirector = async () => {
         if (check === "CHECK BALANCE") Balance(userid, token);
         if (check === "DEPOSIT MONEY") deposit(userid, token);
         if (check === "WITHDRAW MONEY") withdraw(userid, token);
-        if (check === "VIEW LAST 10 TRANSACTIONS") lastTrans(userid, token);
+        if (check === "VIEW ALL TRANSACTIONS") lastTrans(userid, token);
         if (check === "ADD BENEFICIARIES") addBene(userid, token);
         if (check === "REMOVE BENEFICIARIES") removeBene(userid, token);
         if (check === "TRANSFER AMOUNT") transfer(userid, token);

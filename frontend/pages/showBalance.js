@@ -6,12 +6,12 @@ const Balance = async (userid, token) => {
     .prompt({
       type: "password",
       name: "profilePass",
-      message: "enter profile pass to view balance",
+      message: "enter profile pass ",
     })
     .then((result) => {
       axios({
         method: "post",
-        url: `${process.env.API_URL}/balance`,
+        url: "http://localhost:3000/balance",
         headers: {
           "auth-token": token,
         },

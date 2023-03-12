@@ -6,7 +6,7 @@ const deposit = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass to deposit amount",
+        message: "enter profile pass ",
       },
       {
         type: "number",
@@ -17,7 +17,7 @@ const deposit = async (userid, token) => {
     .then((result) => {
       axios({
         method: "post",
-        url: `${process.env.API_URL}/deposit`,
+        url: "http://localhost:3000/deposit",
         headers: {
           "auth-token": token,
         },

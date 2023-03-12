@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const connectdb = require("./db/db.js");
-const port = 3000;
+const port = process.env.PORT || 3000;
 const { signUp, signIn } = require("./auth/auth");
 const { showBalance } = require("./functionalities/showBalance.js");
 const { deposit } = require("./functionalities/deposit.js");

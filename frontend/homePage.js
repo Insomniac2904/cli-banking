@@ -23,10 +23,12 @@ inquirer
       register();
     }
     if (answer.homeOptions == "EXIT") {
-      fs.unlink("./token.json", (err) => {
-        if (err) console.log("LOGIN REQUIRED");
-        else console.log("SEE YOU LATER");
-      });
+      if (fs.existsSync("./token.json")) {
+        fs.unlink("./token.json", (err) => {
+          if (err) console.log("LOGIN REQUIRED");
+          else console.log("SEE YOU LATER");
+        });
+      } else console.log("SEE YOU LATER");
     }
     if (answer.homeOptions == "OPTIONS") {
       redirector();

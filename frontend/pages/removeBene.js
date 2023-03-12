@@ -6,7 +6,7 @@ const removeBene = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass to withdraw amount",
+        message: "enter profile pass ",
       },
       {
         type: "input",
@@ -17,7 +17,7 @@ const removeBene = async (userid, token) => {
     .then((result) => {
       axios({
         method: "post",
-        url: `${process.env.API_URL}/removebene`,
+        url: "http://localhost:3000/removebene",
         headers: {
           "auth-token": token,
         },

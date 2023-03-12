@@ -1,12 +1,17 @@
 const axios = require("axios");
 const inquirer = require("inquirer");
-const register = () => {
-  inquirer
+const logout = require("./logout");
+const fs = require("fs");
+const register = async () => {
+  if (fs.existsSync("./token.json")) {
+    logout();
+  }
+  await inquirer
     .prompt([
       {
         type: "input",
         name: "userid",
-        message: "enter userid : ",
+        message: "enter userid to register : ",
       },
       {
         type: "password",
@@ -27,7 +32,7 @@ const register = () => {
     .then((ans) => {
       axios({
         method: "post",
-        url: `${process.env.API_URL}/register`,
+        url: "http://localhost:3000/register",
         data: {
           userid: ans.userid.trim(),
           password: ans.password.trim(),

@@ -3,7 +3,6 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const redirector = require("./redirector");
 const register = require("./register");
-
 const login = async () => {
   if (!fs.existsSync("./token.json")) {
     inquirer
@@ -22,7 +21,7 @@ const login = async () => {
       .then((ans) => {
         axios({
           method: "post",
-          url: `${process.env.API_URL}/login`,
+          url: "http://localhost:3000/login",
           data: {
             userid: ans.userid.trim(),
             password: ans.password.trim(),
@@ -54,7 +53,8 @@ const login = async () => {
                   }
                   if (answer.option === "RETRY LOGIN") {
                     login();
-                  } else {
+                  }
+                  if (answer.option === "EXIT") {
                     console.log("SEE YOU LATER");
                   }
                 })
