@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const showAllBeneficiaries = async (req, res) => {
   const currentUser = await tempUser.findOne({ userid: req.body.userid });
-  if (!currentUser) return res.send("User not found enter proper userid");
+
   bcrypt
     .compare(req.body.profilePass, currentUser.profilePass)
     .then((result) => {

@@ -6,17 +6,17 @@ const addBene = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass ",
+        message: "Enter profile Password ",
       },
       {
         type: "input",
         name: "beneficiaryUserid",
-        message: "enter userid of beneficiary",
+        message: "Enter Userid of Beneficiary",
       },
       {
         type: "number",
         name: "Limit",
-        message: "enter Limit of beneficary",
+        message: "Enter Limit of Beneficary",
       },
     ])
     .then((result) => {

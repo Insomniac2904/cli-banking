@@ -6,23 +6,23 @@ const transfer = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass ",
+        message: "Enter profile password",
       },
       {
         type: "input",
         name: "recieverUserid",
-        message: "enter user id of reciever",
+        message: "Enter Userid of reciever",
       },
       {
         type: "number",
         name: "amount",
-        message: "enter amount to be transferred",
+        message: "Enter amount to be transferred",
       },
     ])
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/transfer",
+        url: "https://cli-banking.vercel.app/transfer",
         headers: {
           "auth-token": token,
         },
@@ -37,7 +37,7 @@ const transfer = async (userid, token) => {
           console.log(response.data);
         })
         .catch((err) => {
-          console.log(err.message);
+          console.log(err);
         });
     })
     .catch((err) => {

@@ -6,7 +6,7 @@ const Balance = async (userid, token) => {
     .prompt({
       type: "password",
       name: "profilePass",
-      message: "enter profile pass ",
+      message: "Enter profile password ",
     })
     .then((result) => {
       axios({

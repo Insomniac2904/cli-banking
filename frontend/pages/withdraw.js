@@ -6,18 +6,18 @@ const withdraw = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass ",
+        message: "Enter profile password",
       },
       {
         type: "number",
         name: "amount",
-        message: "enter amount to be withdraw",
+        message: "Enter amount to be withdraw",
       },
     ])
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/withdraw",
+        url: "https://cli-banking.vercel.app/withdraw",
         headers: {
           "auth-token": token,
         },

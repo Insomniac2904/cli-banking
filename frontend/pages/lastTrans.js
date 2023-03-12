@@ -5,12 +5,12 @@ const lastTrans = async (userid, token) => {
     .prompt({
       type: "password",
       name: "profilePass",
-      message: "enter profile pass ",
+      message: "Enter profile password ",
     })
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/last",
+        url: "https://cli-banking.vercel.app/last",
         headers: {
           "auth-token": token,
         },

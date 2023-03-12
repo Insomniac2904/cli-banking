@@ -21,7 +21,7 @@ const login = async () => {
       .then((ans) => {
         axios({
           method: "post",
-          url: "http://localhost:3000/login",
+          url: "https://cli-banking.vercel.app/login",
           data: {
             userid: ans.userid.trim(),
             password: ans.password.trim(),

@@ -6,7 +6,7 @@ const withdraw = async (req, res) => {
   const tempuser = await tempUser.findOne({ userid: req.body.userid });
   let amount = req.body.amount;
   if (Math.abs(amount) > tempuser.balance) {
-    return res.send("insufficient balance!");
+    return res.send("Insufficient balance!");
   } else {
     if (!tempuser) {
       return res.send("User does not exists, please Sign Up");
@@ -36,10 +36,10 @@ const withdraw = async (req, res) => {
                 }
               )
               .then(() => {
-                res.send("Amount withdrawn is: " + amount);
+                res.send("Amount withdrawn is:" + amount);
               });
           } else {
-            res.status(500).send("incorrect profile password");
+            res.status(500).send("Incorrect profile password");
           }
         });
     }

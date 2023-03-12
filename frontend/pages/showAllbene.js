@@ -5,12 +5,12 @@ const showallbene = async (userid, token) => {
     .prompt({
       type: "password",
       name: "profilePass",
-      message: "enter profile pass ",
+      message: "Enter profile password ",
     })
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/showallbene",
+        url: "https://cli-banking.vercel.app/showallbene",
         headers: {
           "auth-token": token,
         },

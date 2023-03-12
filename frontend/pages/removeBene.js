@@ -6,18 +6,18 @@ const removeBene = async (userid, token) => {
       {
         type: "password",
         name: "profilePass",
-        message: "enter profile pass ",
+        message: "Enter profile password ",
       },
       {
         type: "input",
         name: "beneficiaryUserid",
-        message: "enter the user id to be removed",
+        message: "Enter the Userid to be removed",
       },
     ])
     .then((result) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/removebene",
+        url: "https://cli-banking.vercel.app/removebene",
         headers: {
           "auth-token": token,
         },

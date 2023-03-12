@@ -11,28 +11,28 @@ const register = async () => {
       {
         type: "input",
         name: "userid",
-        message: "enter userid to register : ",
+        message: "Enter Userid to register: ",
       },
       {
         type: "password",
         name: "password",
-        message: "enter password : ",
+        message: "Enter password: ",
       },
       {
         type: "password",
         name: "profilePass",
-        message: "enter Profile password: ",
+        message: "Enter Profile password: ",
       },
       {
         type: "input",
         name: "name",
-        message: "enter your name: ",
+        message: "Enter your name: ",
       },
     ])
     .then((ans) => {
       axios({
         method: "post",
-        url: "http://localhost:3000/register",
+        url: "https://cli-banking.vercel.app/register",
         data: {
           userid: ans.userid.trim(),
           password: ans.password.trim(),

@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const transfer = async (req, res) => {
   const currentUser = await tempUser.findOne({ userid: req.body.userid });
   const reciever = await tempUser.findOne({ userid: req.body.recieverUserid });
-  if (!reciever) res.status(501).send("reciever not found!");
+  if (!reciever) res.status(501).send("Reciever not registered.");
   else {
     bcrypt
       .compare(req.body.profilePass, currentUser.profilePass)
@@ -65,7 +65,7 @@ const transfer = async (req, res) => {
                         }
                       )
                       .then(() => {
-                        res.status(200).send("transaction done successfully");
+                        res.status(200).send("Transaction done successfully.");
                       })
                       .catch((err) => {
                         console.log(err.message);
@@ -76,7 +76,7 @@ const transfer = async (req, res) => {
                   });
               }
             } else {
-              res.send("reciever not in  beneficairy list");
+              res.send("Reciever not in  beneficairy list");
             }
           }
         }
