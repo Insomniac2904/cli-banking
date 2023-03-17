@@ -59,12 +59,12 @@ cli-bank
 ### Creating A Pull Request
 
 1. Fork the Project
-2.Create an Issue for major changes
-3.Clone the repo to Local Computer 
+2. Create an Issue for major changes
+3. Clone the repo to Local Computer 
 ```sh
 git clone https://github.com/Insomniac2904/cli-banking.git
 ```
-4.Create Pull Request 
+4. Create Pull Request 
 
 
 ## Authors
